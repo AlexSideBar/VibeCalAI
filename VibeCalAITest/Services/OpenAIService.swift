@@ -15,39 +15,74 @@ struct FoodAnalysisService {
     func analyze(image: UIImage) async throws -> FoodItem? {
         guard let jpeg = image.jpegData(compressionQuality: 0.8) else { return nil }
         
+        // Create the JSON schema for structured output
+        let nutritionSchema = JSONSchema(
+            type: .object,
+            properties: [
+                "name": JSONSchema(
+                    type: .string,
+                    description: "The name of the food item"
+                ),
+                "calories": JSONSchema(
+                    type: .number,
+                    description: "The estimated calories in the food"
+                ),
+                "carbs": JSONSchema(
+                    type: .number,
+                    description: "The estimated carbohydrates in grams"
+                ),
+                "fat": JSONSchema(
+                    type: .number,
+                    description: "The estimated fat content in grams"
+                ),
+                "protein": JSONSchema(
+                    type: .number,
+                    description: "The estimated protein content in grams"
+                )
+            ],
+            required: ["name", "calories", "carbs", "fat", "protein"],
+            additionalProperties: false
+        )
+        
+        // Create the response format schema
+        let responseFormatSchema = JSONSchemaResponseFormat(
+            name: "nutrition_analysis",
+            strict: true,
+            schema: nutritionSchema
+        )
+        
         let systemMessage = ChatCompletionParameters.Message(
             role: .system,
-            content: .text("You are a nutrition expert. Analyze the food in the image and provide accurate nutritional information. You must respond with valid JSON using this exact format: {\"name\": \"food name\", \"calories\": 123, \"carbs\": 45, \"fat\": 12, \"protein\": 8}")
+            content: .text("You are a nutrition expert. Analyze the food in the image and provide accurate nutritional information. Estimate portion sizes carefully and provide realistic nutritional values. Always respond with the exact JSON structure requested.")
         )
         
         let userMessage = ChatCompletionParameters.Message(
             role: .user,
             content: .contentArray([
-                .text("Analyze this food image and provide nutritional information including name, calories, carbs, fat, and protein. Be as accurate as possible with portion size estimation. Respond with JSON only."),
+                .text("Analyze this food image and provide nutritional information including name, calories, carbs, fat, and protein. Be as accurate as possible with portion size estimation."),
                 .imageUrl(.init(url: URL(string: "data:image/jpeg;base64,\(jpeg.base64EncodedString())")!))
             ])
         )
         
-        // Use the basic parameters without responseFormat for now
+        // Use structured output with response format
         let parameters = ChatCompletionParameters(
             messages: [systemMessage, userMessage],
             model: .gpt4o,
+            responseFormat: .jsonSchema(responseFormatSchema),
             temperature: 0
         )
         
         do {
             let completion = try await openAIService.startChat(parameters: parameters)
             
-            guard let content = completion.choices.first?.message.content else {
+            guard let content = completion.choices?.first?.message?.content else {
                 throw NSError(domain: "OpenAI", code: -1, userInfo: [NSLocalizedDescriptionKey: "No content in response"])
             }
             
             print("AI Response: \(content)")
             
-            // Try to extract JSON from the response
-            let jsonString = extractJSON(from: content)
-            
-            guard let jsonData = jsonString.data(using: .utf8) else {
+            // Parse the JSON response directly since it's guaranteed to be valid JSON
+            guard let jsonData = content.data(using: String.Encoding.utf8) else {
                 throw NSError(domain: "OpenAI", code: -1, userInfo: [NSLocalizedDescriptionKey: "Could not convert response to data"])
             }
             
@@ -55,10 +90,10 @@ struct FoodAnalysisService {
             
             return FoodItem(
                 name: nutritionData.name,
-                calories: Double(nutritionData.calories),
-                carbs: Double(nutritionData.carbs),
-                fat: Double(nutritionData.fat),
-                protein: Double(nutritionData.protein)
+                calories: nutritionData.calories,
+                carbs: nutritionData.carbs,
+                fat: nutritionData.fat,
+                protein: nutritionData.protein
             )
             
         } catch {
@@ -66,28 +101,13 @@ struct FoodAnalysisService {
             throw error
         }
     }
-    
-    private func extractJSON(from text: String) -> String {
-        // If the response is already JSON, return it
-        if text.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("{") {
-            return text.trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-        
-        // Try to find JSON within the text
-        if let startRange = text.range(of: "{"),
-           let endRange = text.range(of: "}", options: .backwards) {
-            return String(text[startRange.lowerBound...endRange.upperBound])
-        }
-        
-        return text
-    }
 }
 
 // MARK: - DTOs
 private struct NutritionOutput: Decodable {
     let name: String
-    let calories: Int
-    let carbs: Int
-    let fat: Int
-    let protein: Int
+    let calories: Double
+    let carbs: Double
+    let fat: Double
+    let protein: Double
 }
