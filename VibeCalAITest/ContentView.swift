@@ -1,24 +1,34 @@
-//
-//  ContentView.swift
-//  VibeCalAITest
-//
-//  Created by Aditya Saravana on 6/16/25.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @State private var showingCamera = false
 
-#Preview {
-    ContentView()
+    var body: some View {
+        TabView {
+            NavigationStack {
+                LogView()
+                    .navigationTitle("Nutrition Log")
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                showingCamera = true
+                            } label: {
+                                Image(systemName: "camera.fill")
+                                    .font(.title2)
+                            }
+                        }
+                    }
+            }
+            .tabItem { Label("Log", systemImage: "list.bullet.clipboard") }
+
+            NavigationStack {
+                StatsView()
+                    .navigationTitle("Statistics")
+            }
+            .tabItem { Label("Stats", systemImage: "chart.bar") }
+        }
+        .sheet(isPresented: $showingCamera) {
+            CameraView()
+        }
+    }
 }

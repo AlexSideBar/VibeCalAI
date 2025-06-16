@@ -6,13 +6,30 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		59F3809B2E00BC8F003B2D22 /* SwiftOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 59F3809A2E00BC8F003B2D22 /* SwiftOpenAI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		59CB74D82E00A14D00F807B9 /* VibeCalAITest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VibeCalAITest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		59F3808C2E00A631003B2D22 /* Exceptions for "VibeCalAITest" folder in "VibeCalAITest" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 59CB74D72E00A14D00F807B9 /* VibeCalAITest */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		59CB74DA2E00A14D00F807B9 /* VibeCalAITest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				59F3808C2E00A631003B2D22 /* Exceptions for "VibeCalAITest" folder in "VibeCalAITest" target */,
+			);
 			path = VibeCalAITest;
 			sourceTree = "<group>";
 		};
@@ -23,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59F3809B2E00BC8F003B2D22 /* SwiftOpenAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +83,7 @@
 			);
 			name = VibeCalAITest;
 			packageProductDependencies = (
+				59F3809A2E00BC8F003B2D22 /* SwiftOpenAI */,
 			);
 			productName = VibeCalAITest;
 			productReference = 59CB74D82E00A14D00F807B9 /* VibeCalAITest.app */;
@@ -94,6 +113,9 @@
 			);
 			mainGroup = 59CB74CF2E00A14D00F807B9;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				59F380992E00BC8F003B2D22 /* XCRemoteSwiftPackageReference "SwiftOpenAI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 59CB74D92E00A14D00F807B9 /* Products */;
 			projectDirPath = "";
@@ -256,6 +278,7 @@
 				DEVELOPMENT_TEAM = E2RJE8M8Y3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VibeCalAITest/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -287,6 +310,7 @@
 				DEVELOPMENT_TEAM = E2RJE8M8Y3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VibeCalAITest/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -330,6 +354,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		59F380992E00BC8F003B2D22 /* XCRemoteSwiftPackageReference "SwiftOpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jamesrochabrun/SwiftOpenAI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		59F3809A2E00BC8F003B2D22 /* SwiftOpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59F380992E00BC8F003B2D22 /* XCRemoteSwiftPackageReference "SwiftOpenAI" */;
+			productName = SwiftOpenAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 59CB74D02E00A14D00F807B9 /* Project object */;
 }

@@ -1,11 +1,5 @@
-//
-//  VibeCalAITestApp.swift
-//  VibeCalAITest
-//
-//  Created by Aditya Saravana on 6/16/25.
-//
-
 import SwiftUI
+import SwiftData
 
 @main
 struct VibeCalAITestApp: App {
@@ -13,5 +7,6 @@ struct VibeCalAITestApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: FoodItem.self)
     }
 }
