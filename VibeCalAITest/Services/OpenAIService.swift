@@ -60,7 +60,7 @@ struct FoodAnalysisService {
             role: .user,
             content: .contentArray([
                 .text("Analyze this food image and provide nutritional information including name, calories, carbs, fat, and protein. Be as accurate as possible with portion size estimation."),
-                .imageUrl(.init(url: URL(string: "data:image/jpeg;base64,\(jpeg.base64EncodedString())")!))
+                .imageUrl(.init(url: URL(string: "data:image/jpeg;base64,\(jpeg.base64EncodedString())")!)) 
             ])
         )
         
