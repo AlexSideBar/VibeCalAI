@@ -6,9 +6,9 @@ struct FoodAnalysisService {
     private let openAIService: OpenAIService
     
     init() {
-        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String else {
-            fatalError("Add OPENAI_API_KEY to Info.plist")
-        }
+        #error("Add your OpenAI API key here")
+        let apiKey = "sk..."
+        
         self.openAIService = OpenAIServiceFactory.service(apiKey: apiKey)
     }
 
