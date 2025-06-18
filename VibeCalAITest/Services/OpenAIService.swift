@@ -6,7 +6,6 @@ struct FoodAnalysisService {
     private let openAIService: OpenAIService
     
     init() {
-        #error("Add your OpenAI API key here")
         let apiKey = "sk..."
         
         self.openAIService = OpenAIServiceFactory.service(apiKey: apiKey)
