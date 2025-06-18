@@ -5,8 +5,6 @@ struct ContentView: View {
     @State private var showingAdd = false
     
     var body: some View {
-        //        TabView {
-            
         NavigationStack {
             LogView(showingAdd: $showingAdd)
                 .navigationTitle("Nutrition Log")
@@ -28,9 +26,6 @@ struct ContentView: View {
                     }
                 }
         }
-        //            .tabItem { Label("Log", systemImage: "list.bullet.clipboard") }
-        
-        //        }
         .sheet(isPresented: $showingCamera) {
             CameraView()
         }
