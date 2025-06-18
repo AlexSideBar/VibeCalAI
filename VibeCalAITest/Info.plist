@@ -4,7 +4,5 @@
 <dict>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses the camera to scan food and analyze nutritional content.</string>
-	<key>OPENAI_API_KEY</key>
-	<string>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</string>
 </dict>
 </plist>
